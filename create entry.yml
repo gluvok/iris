@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: https://gluvok.vercel.app/api/entries
+  url: https://gluvok-git-migration-dheereshag-team.vercel.app/api/entries
   body:
     type: multipart-form
     data:
