@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://127.0.0.1:8000/recognize
+  url: http://0.0.0.0:8000/recognize
   headers:
     - name: Accept
       value: application/json
@@ -15,7 +15,8 @@ http:
       - name: file
         type: file
         value:
-          - /Users/d/Downloads/argus/tests/4.jpg
+          - /Users/d/Downloads/1.jpg
+        contentType: image/jpeg
   auth: inherit
 
 settings:

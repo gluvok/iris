@@ -11,10 +11,10 @@ http:
     data:
       - name: username
         type: text
-        value: pi1
+        value: pi0
       - name: password
         type: text
-        value: hardware123
+        value: hghghg
       - name: center_id
         type: text
         value: "1"
@@ -28,6 +28,8 @@ http:
         type: file
         value:
           - /Users/d/Downloads/1.jpg
+          - /Users/d/Downloads/2.jpg
+        contentType: multipart/mixed
   auth: inherit
 
 settings:
