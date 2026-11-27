@@ -15,7 +15,7 @@ http:
       - name: file
         type: file
         value:
-          - /Users/d/Downloads/1.jpg
+          - fixtures/1.jpg
         contentType: image/jpeg
   auth: inherit
 
