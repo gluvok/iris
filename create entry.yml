@@ -5,16 +5,13 @@ info:
 
 http:
   method: POST
-  url: https://gluvok-git-migration-dheereshag-team.vercel.app/api/entries
+  url: "{{process.env.BASE_URL}}/api/entries"
+  headers:
+    - name: x-api-key
+      value: "{{process.env.DEVICE_KEY}}"
   body:
     type: multipart-form
     data:
-      - name: username
-        type: text
-        value: pi0
-      - name: password
-        type: text
-        value: hghghg
       - name: center_id
         type: text
         value: "1"
