@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: https://gluvok-git-migration-dheereshag-team.vercel.app/api/entries
+  url: "{{process.env.BASE_URL}}/api/entries"
   headers:
     - name: x-api-key
       value: "{{process.env.DEVICE_KEY}}"
