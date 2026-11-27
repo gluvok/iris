@@ -5,20 +5,16 @@ info:
 
 http:
   method: POST
-  url: https://gluvok-git-migration-dheereshag-team.vercel.app/api/entries
+  url: "{{process.env.BASE_URL}}/api/entries/automatic"
+  headers:
+    - name: x-api-key
+      value: "{{process.env.DEVICE_KEY}}"
+    - name: Idempotency-Key
+      value: "{{idempotencyKey}}"
   body:
     type: multipart-form
     data:
-      - name: username
-        type: text
-        value: pi0
-      - name: password
-        type: text
-        value: hghghg
-      - name: center_id
-        type: text
-        value: "1"
-      - name: detected_vehicle_number
+      - name: vehicle_number
         type: text
         value: MH12AB1234
       - name: weight
@@ -27,14 +23,27 @@ http:
       - name: file
         type: file
         value:
-          - /Users/d/Downloads/1.jpg
-          - /Users/d/Downloads/2.jpg
-        contentType: multipart/mixed
+          - fixtures/1.jpg
+          - fixtures/2.jpg
+        contentType: image/jpeg
   auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // UUIDv7 (Bruno built-in $guid is v4): 48-bit ms timestamp, version 7, variant 10, rest random
+        // Math.random, not crypto: Bruno's Safe Mode sandbox may not expose crypto; the key only has to be unique
+        const b = Uint8Array.from({ length: 16 }, () => Math.floor(Math.random() * 256));
+        for (let i = 0, t = Date.now(); i < 6; i++, t = Math.floor(t / 256)) b[5 - i] = t % 256;
+        b[6] = (b[6] & 15) | 112;
+        b[8] = (b[8] & 63) | 128;
+        const h = [...b].map((x) => x.toString(16).padStart(2, "0")).join("");
+        bru.setVar("idempotencyKey", `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`);
 
 settings:
   encodeUrl: true
   timeout: 0
-  followRedirects: true
+  followRedirects: false
   maxRedirects: 5
   forwardAuthorizationHeader: false
