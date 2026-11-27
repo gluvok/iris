@@ -33,7 +33,8 @@ runtime:
     - type: before-request
       code: |-
         // UUIDv7 (Bruno built-in $guid is v4): 48-bit ms timestamp, version 7, variant 10, rest random
-        const b = crypto.getRandomValues(new Uint8Array(16));
+        // Math.random, not crypto: Bruno's Safe Mode sandbox may not expose crypto; the key only has to be unique
+        const b = Uint8Array.from({ length: 16 }, () => Math.floor(Math.random() * 256));
         for (let i = 0, t = Date.now(); i < 6; i++, t = Math.floor(t / 256)) b[5 - i] = t % 256;
         b[6] = (b[6] & 15) | 112;
         b[8] = (b[8] & 63) | 128;
